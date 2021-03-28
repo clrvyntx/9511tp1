@@ -5,13 +5,13 @@ LDLIBS = -lm
 
 all :  $(PROGRAM)
 
-$(PROGRAM) : main.o imagen.o pixel.o filtro.o argumentos.o
-	$(CC) $(CFLAGS) main.o imagen.o pixel.o argumentos.o filtro.o -o $(PROGRAM) $(LDLIBS)
+$(PROGRAM) : main.o imagen.o pixel.o filtro.o argumentos.o endianness.o
+	$(CC) $(CFLAGS) main.o imagen.o pixel.o argumentos.o filtro.o endianness.o -o $(PROGRAM) $(LDLIBS)
 
 main.o : main.c argumentos.h
 	$(CC) $(CFLAGS) -c main.c
 
-imagen.o : imagen.c imagen.h pixel.h filtro.h
+imagen.o : imagen.c imagen.h pixel.h filtro.h endianness.h
 	$(CC) $(CFLAGS) -c imagen.c
 
 pixel.o : pixel.c pixel.h
@@ -22,6 +22,9 @@ filtro.o : filtro.c filtro.h pixel.h
 
 argumentos.o : argumentos.c argumentos.h imagen.h filtro.h
 	$(CC) $(CFLAGS) -c argumentos.c
+
+endianness.o : endianness.c endianness.h
+	$(CC) $(CFLAGS) -c endianness.c
 
 clean :
 	rm *.o
